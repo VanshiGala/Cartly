@@ -6,9 +6,9 @@ export default function AdminUpload() {
   const [file, setFile] = useState<File | null>(null); //accept null obj
   const [imgUrl, setImgUrl] = useState("");
   const [loading, setLoading] = useState(false);
-    const [name, setName] = useState("");
-      const [desc, setDesc] = useState("");
-        const [price, setPrice] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
 
   const handleUpload = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); //stop default form behavior
@@ -40,7 +40,7 @@ export default function AdminUpload() {
         //backend creates product with name, desc, img, price
         body: JSON.stringify({
           name, 
-          desc,
+          description,
           image: imageUrl,
           price: price, // USD
         }),
@@ -77,8 +77,8 @@ export default function AdminUpload() {
         <input
           type="text"
           placeholder="Description"
-          value={desc}
-          onChange={(e) => setDesc(e.target.value)}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
           className="border p-2 rounded"
         />
         <input

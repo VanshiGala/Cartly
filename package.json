@@ -9,10 +9,13 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@radix-ui/react-slot": "^1.2.4",
     "@types/multer": "^2.0.0",
+    "add": "^2.0.6",
     "axios": "^1.13.2",
     "busboy": "^1.6.0",
+    "card": "^2.5.4",
     "class-variance-authority": "^0.7.1",
     "cloudinary": "^2.8.0",
     "clsx": "^2.1.1",
@@ -23,8 +26,10 @@
     "next-connect": "^1.0.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "shadcn": "^3.5.0",
     "stripe": "^19.3.0",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.0",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
