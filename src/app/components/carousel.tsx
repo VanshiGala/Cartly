@@ -15,13 +15,13 @@ export const Carousel=({products}:props)=>{
     const [current, setCurrent] = useState<number>(0);
     useEffect(()=>{
         const interval = setInterval(()=>{
-            setCurrent((prev)=>(prev+1)%products.length);
+            setCurrent((prev)=>(prev+1)%products.length); //%products.length -> ensure looping back to 0
         },3000);
 
         return ()=>clearInterval(interval)
     },[products.length]);
 
-    const currentProduct = products[current]
+    const currentProduct = products[current] //pick product at current index
     const price = currentProduct.default_price as Stripe.Price;
 
     return(

@@ -9,13 +9,13 @@ import { Button } from "./ui/button";
 export const Navbar=()=>{
     const [mobileOpen, setMobileOpen] = useState<boolean>(false)
     const {items} = useCartStore()
-    const cartCount =items.reduce((acc,item)=>acc + item.quantity, 0) ;
+    const cartCount =items.reduce((acc,item)=>acc + item.quantity, 0) ; //loop through an array and reduce it to single number
 
     useEffect(()=>{
         const handleResize=()=>{
             if (window.innerWidth >=768 ){
                 setMobileOpen(false)
-            }
+            } //side nav appear when screen size is less than 768
         }
         window.addEventListener("resize", handleResize);
         return ()=>window.removeEventListener("resize",handleResize)

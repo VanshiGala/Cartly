@@ -22,7 +22,6 @@ export default function Checkout() {
   if (total == 0 || items.length == 0) {
     return (
       <div>
-        {" "}
         <h1 className="text-black">Your Cart is empty</h1>
       </div>
     );

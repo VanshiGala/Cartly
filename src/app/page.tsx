@@ -7,11 +7,11 @@ import { Carousel } from "./components/carousel";
 
 export default async function Home() {
   const products = await stripe.products.list({
-      expand: ["data.default_price"],
+      expand: ["data.default_price"], //Fetch full price details instead of just IDs.
       limit: 5,
   });
   return (
-<div>
+ <div>
   <section className="flex justify-center items-center py-16 bg-neutral-100">
     <div className="max-w-6xl w-full bg-white rounded-2xl shadow-sm py-12 px-8 grid grid-cols-1 sm:grid-cols-2 items-center justify-items-center gap-8">
       <div className="text-center sm:text-left space-y-4">
@@ -20,9 +20,9 @@ export default async function Home() {
           Discover the latest products at the best prices.
         </p>
         <Link href="/products">
-        <button className="mt-4 bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 transition cursor-pointer">
+        <Button className="mt-4 bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 transition cursor-pointer">
           Browse All Products
-        </button>
+        </Button>
         </Link>
       </div>
       <div>
@@ -44,4 +44,6 @@ export default async function Home() {
     </div>
   </section>
 </div>
+
+    
   )}
