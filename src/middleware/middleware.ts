@@ -49,7 +49,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // If user is NOT logged in → block /home
-  if (!token && url.pathname.startsWith("/home")) {
+  if (!token && url.pathname.startsWith("/")) {
     return NextResponse.redirect(
       new URL("/sign-in", request.url)
     );

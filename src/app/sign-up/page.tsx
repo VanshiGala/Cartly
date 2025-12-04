@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import axios from "axios";
-import { redirect } from "next/dist/server/api-utils";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({ email: "", password: "", name: "" });
@@ -19,7 +18,7 @@ export default function SignUp() {
     try {
       const res = await axios.post("/api/register", formData);
       setSuccessMsg(res.data.message);
-       window.location.href = "/home";
+       window.location.href = "/";
     } catch (error: any) {
       setErrorMsg(error?.response?.data?.message || "Something went wrong");
     }
@@ -34,14 +33,15 @@ export default function SignUp() {
           Create an Account
         </h1>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4" autoComplete="off">
           {/* Name */}
           <div>
             <label className="block text-sm font-medium mb-1">Name</label>
             <input
               type="text"
               required
-              placeholder="Enter your name"
+              //autoComplete="off"
+             // placeholder="Enter your name"
               className="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-black focus:outline-none"
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
@@ -55,7 +55,7 @@ export default function SignUp() {
             <input
               type="email"
               required
-              placeholder="you@example.com"
+              //autoComplete="off"
               className="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-black focus:outline-none"
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
@@ -69,7 +69,7 @@ export default function SignUp() {
             <input
               type="password"
               required
-              placeholder="********"
+              //autoComplete="new-password"
               className="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-black focus:outline-none"
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })

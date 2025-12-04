@@ -15,7 +15,9 @@ export const ProductDetail = ({ product }: Props) => {
   const price = product.default_price && typeof product.default_price === "object"
       ? (product.default_price as Stripe.Price)
       : null;
-  const cartItem = items.find((item)=>item.id === product.id);
+  const safeItems = Array.isArray(items) ? items : []; //zustand first loads [] state. sp operations crash
+
+  const cartItem = safeItems.find((item)=>item.id === product.id);
   const quantity = cartItem ? cartItem.quantity : 0;
 
 

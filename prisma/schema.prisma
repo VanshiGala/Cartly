@@ -17,10 +17,56 @@ datasource db {
 }
 
 model User{
-  id String @id @default(uuid()) //pk
-  email String @unique
-  name String? //can be null
+  id       String    @id              @default(uuid()) //pk
+  email    String    @unique
+  name     String? //can be null
   password String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  cart Cart? //one user -> exactly one cart
+}
+
+model Cart {
+  id        String      @id @default(uuid())
+  userId    String      @unique //prevent multiple cart per user
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade) //cascade -> if user is deleted , cart also delete automatically ; cart -> connected to User
+  items     CartItem[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@index([userId]) //db index for fast lookups
+}
+
+model CartItem {
+  id         String  @id @default(uuid()) //pk
+  cartId     String //fk
+  productId  String //fk
+  quantity   Int     @default(1)
+
+  cart       Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade) //connected to Cart
+  product    Product @relation(fields: [productId], references: [id], onDelete: Cascade) //connected to product
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Composite unique constraint so you can’t have duplicates
+  @@unique([cartId, productId])
+  @@index([cartId])
+  @@index([productId])
+} //@@index -> for speed
+
+model Product {
+  id          String      @id @default(uuid())
+  name        String
+  price       Decimal     @db.Decimal(10, 2) //proper money type ; 2 digit after decimal ; 10 no. in total digits
+  imageUrl    String?
+  description String?
+  stock       Int         @default(0) //inventory control
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  stripeProductId String   @unique 
+  // Relations -> a product can appear in my cart/cartItems
+  cartItems   CartItem[]
+
+  @@index([name]) //index for fast lookups by name
 }

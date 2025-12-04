@@ -4,11 +4,7 @@ import { v2 as cloudinary } from "cloudinary"; //v2 API. The SDK handle authenti
 //configure cloudinary
 //'!' -> This is non-null assertion. It tells Typescript that these env var definitely exists.
 //without '!' uploads will fail because SDK won't know which A/c to target
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
-  api_key: process.env.CLOUDINARY_API_KEY!,
-  api_secret: process.env.CLOUDINARY_API_SECRET!,
-});
+
 
 //POST HTTP method handler. Runs automatically when client sends req
 export async function POST(req: Request) {

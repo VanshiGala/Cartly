@@ -22,6 +22,8 @@
     "class-variance-authority": "^0.7.1",
     "cloudinary": "^2.8.0",
     "clsx": "^2.1.1",
+    "debounce": "^3.0.0",
+    "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.553.0",
     "multer": "^2.0.2",
     "next": "16.0.1",
@@ -38,6 +40,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

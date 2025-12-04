@@ -1,18 +1,18 @@
-import { NextAuthOptions } from "next-auth";
-import bcrypt from "bcryptjs";
+import { NextAuthOptions } from "next-auth"; //type def
+import bcrypt from "bcryptjs"; //comapre hashed pass
 import { prisma } from "../../../../lib/prisma"; //prisma handles the connection
-import CredentialsProvider from "next-auth/providers/credentials";
+import CredentialsProvider from "next-auth/providers/credentials"; //allow user to signin using custom credential
 
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       id: "credentials",
       name: "Credentials",
-      credentials: {
+      credentials: { //define input fields for login
         email: { label: "email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials: any): Promise<any> {
+      async authorize(credentials: any): Promise<any> { //called when login
         //directly query db
         try {
             //find user by email
@@ -50,7 +50,7 @@ export const authOptions: NextAuthOptions = {
   callbacks:{
     async session({session, token}){
         if(token){
-            session.user._id = token._id;
+            session.user.id = token.id;
             session.user.isVerified = token.isVerified;
             session.user.isAcceptingMessages = token.isAcceptingMessages;
         }
@@ -58,18 +58,20 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({token,user}){
         if (user){
-            token._id = user._id?.toString();
+            token.id = user.id?.toString();
             token.isVerified = user.isVerified;
             token.isAcceptingMessages = user.isAcceptingMessages;
         }
         return token
     },
     async redirect({url,baseUrl}) {
-      return `${baseUrl}/`; // ⬅ ALWAYS redirect user to home
+      return `${baseUrl}/`; // ALWAYS redirect user to home
+      //determines where users are sent after login/logout
     },
   },
-  session:{
+  session:{ //session instead of db
     strategy:"jwt",
+    maxAge: 60*60 
   },
   secret:process.env.NEXTAUTH_SECRET
   
@@ -77,7 +79,7 @@ export const authOptions: NextAuthOptions = {
 
 
 
-// // //postgresql + prisma -> do NOT connect db inside authorize().
-// // //prisma handles the connection automatically
+ //postgresql + prisma -> do NOT connect db inside authorize().
+ //prisma handles the connection automatically
 
 

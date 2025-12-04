@@ -9,16 +9,25 @@ import {
 } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { CheckoutAction } from "./checkout-action";
+import {useSession} from "next-auth/react"
+
 
 export default function Checkout() {
   const { items, removeItem, addItem, clearCart } = useCartStore();
-
+  const {data:session} = useSession()
   //console.log("CHECKOUT ITEMS:", items);
 
   const total = items.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+
+//   const safeItems = Array.isArray(items) ? items : [];
+// const total = safeItems.reduce(
+//   (acc, item) => acc + item.price * item.quantity,
+//   0
+// );
+
   if (total == 0 || items.length == 0) {
     return (
       <div>
@@ -26,6 +35,14 @@ export default function Checkout() {
       </div>
     );
   }
+  const handleProceed = (e: React.FormEvent<HTMLFormElement>) => {
+    if (!session) {
+      e.preventDefault();// prevent form submission
+      window.location.href="/sign-in" // redirect to sign-in , built-in browser property
+      return;
+    }
+    // user is signed in → form submits normally to CheckoutAction
+  };
   return (
     <div>
       <h1>Checkout</h1>
@@ -61,7 +78,7 @@ export default function Checkout() {
           </div>
         </CardContent>
       </Card>
-      <form className="max-w-md mx-auto" action={CheckoutAction}> 
+      <form className="max-w-md mx-auto" action={CheckoutAction} onSubmit={handleProceed}> 
         <input type="hidden" name="items" value={JSON.stringify(items)} />
         <Button type="submit" variant="default" className="w-full mt-2">
           Proceed to Pay

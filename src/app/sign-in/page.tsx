@@ -1,13 +1,21 @@
 "use client";
 
-import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { signIn , useSession} from "next-auth/react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useCartStore } from "@store/cart-store";
+
 
 export default function SignInPage() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
+  const {data : session, status} = useSession()
+  useEffect(() => {
+    if (status === "authenticated") {
+      console.log("User logged in → syncing cart...");
+      useCartStore.getState().syncWithServer();
+    }
+  }, [status]);
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
@@ -44,7 +52,12 @@ export default function SignInPage() {
       setLoading(false);
     }
   }
-
+useEffect(() => {
+  if (session) {
+    // Force immediate sync when user logs in
+    useCartStore.getState().syncWithServer();
+  }
+}, [session]);
   return (
     <div className="min-h-screen flex items-center justify-center bg-neutral-100">
       <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 bg-white rounded-xl shadow-lg overflow-hidden">
