@@ -31,7 +31,7 @@
     "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.553.0",
     "multer": "^2.0.2",
-    "next": "16.0.1",
+    "next": "^16.0.7",
     "next-auth": "^4.24.13",
     "next-cloudinary": "^6.17.4",
     "next-connect": "^1.0.0",
