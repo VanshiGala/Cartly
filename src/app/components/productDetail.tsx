@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const ProductDetail = ({ product }: Props) => {
-  const {items, addItem,removeItem} = useCartStore()
+  const {items, addItem,removeItem,syncWithServer} = useCartStore()
   //after JSON serialization in product->[id]->page, default_price is not a 'Stripe.Price' type anymore — it's just a plain object.
   const price = product.default_price && typeof product.default_price === "object"
       ? (product.default_price as Stripe.Price)
@@ -27,8 +27,8 @@ export const ProductDetail = ({ product }: Props) => {
       name:product.name,
       price :price?.unit_amount ?? 0,
       imageUrl: product.images ? product.images[0]: null,
-      quantity:1
     })
+    syncWithServer();
   }
 
   return (

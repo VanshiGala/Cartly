@@ -2,6 +2,7 @@ import { NextAuthOptions } from "next-auth"; //type def
 import bcrypt from "bcryptjs"; //comapre hashed pass
 import { prisma } from "../../../../lib/prisma"; //prisma handles the connection
 import CredentialsProvider from "next-auth/providers/credentials"; //allow user to signin using custom credential
+import { emailQueue } from "src/queue/emailQueue";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -33,7 +34,12 @@ export const authOptions: NextAuthOptions = {
           if (!isPasswordCorrect) {
             throw new Error("Invalid password");
           }
-
+          //producer
+          await emailQueue.add("login-notification", {
+          to: user.email,
+          subject: "Login detected",
+          text: `Hi ${user.name}, you just logged in at ${new Date().toLocaleString()}`
+        });
           //Return user object to auth (NextAuth will attach session)
           return {
             id: user.id,

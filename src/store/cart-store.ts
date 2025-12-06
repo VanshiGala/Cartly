@@ -104,3 +104,5 @@ export const useCartStore = create<CartStore>()(
 //Zustand is a lightweight, fast, and scalable state management library for React applications.
 // It provides a simple and intuitive way to manage global state in your application,
 // similar to other state management solutions like Redux but with less boilerplate code.
+
+//The Lodash _.debounce() method is a utility function that delays the execution of a given function until a specified wait time has passed since the last invocation. 

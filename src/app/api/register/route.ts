@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import {prisma} from "../../../lib/prisma";
+import { emailQueue } from "src/queue/emailQueue";
 
 export async function POST(req: Request) {
   const { email, password, name } = await req.json();
@@ -15,6 +16,12 @@ export async function POST(req: Request) {
   await prisma.user.create({
     data: { email, password: hashedPassword, name },
   });
+
+  //producer -> adds job to queue
+  await emailQueue.add('welcome-mail',{
+    to:email,
+    subject:"Welcome to Cartly",
+  })
 
   return NextResponse.json({ message: "User created successfully" });
 }
