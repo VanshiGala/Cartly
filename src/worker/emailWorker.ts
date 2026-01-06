@@ -1,7 +1,7 @@
 //bg worker that listens to 'email' queue
 
 import {  Worker } from "bullmq"; //consumes job from queue
-import redisConnection from "src/config/redisConfig";
+import redisConnection from "../config/redisConfig";
 import nodemailer from "nodemailer";
 
 interface EmailWorker {
