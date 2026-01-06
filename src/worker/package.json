@@ -1,0 +1,18 @@
+{
+  "name": "cartly-email-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "worker": "ts-node emailWorker.ts"
+  },
+  "dependencies": {
+    "bullmq": "^5.0.0",
+    "nodemailer": "^6.9.0",
+    "ioredis": "^5.3.0",
+    "dotenv": "^16.4.0"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.0"
+  }
+}
