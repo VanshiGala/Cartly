@@ -21,6 +21,7 @@ export async function POST(req: Request) {
   await emailQueue.add('welcome-mail',{
     to:email,
     subject:"Welcome to Cartly",
+    text:"This is the biggest e-commerce platform"
   })
 
   return NextResponse.json({ message: "User created successfully" });
