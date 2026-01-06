@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "start": "ts-node emailWorker.ts",
     "worker": "ts-node emailWorker.ts"
   },
   "dependencies": {
