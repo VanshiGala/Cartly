@@ -10,7 +10,7 @@ export const authOptions: NextAuthOptions = {
       id: "credentials",
       name: "Credentials",
       credentials: { //define input fields for login
-        email: { label: "email", type: "text" },
+        email: { label: "email", type: "email" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials: any): Promise<any> { //called when login
@@ -20,20 +20,15 @@ export const authOptions: NextAuthOptions = {
           const user = await prisma.user.findUnique({
             where: { email: credentials.email },
           });
-
-          if (!user) {
-            throw new Error("User not found");
-          }
-
+          
+          if (!user) return null;
           // Compare passwords
           const isPasswordCorrect = await bcrypt.compare(
             credentials.password,
             user.password
           );
 
-          if (!isPasswordCorrect) {
-            throw new Error("Invalid password");
-          }
+          if (!isPasswordCorrect) return null;
           //producer
           await emailQueue.add("login-notification", {
           to: user.email,

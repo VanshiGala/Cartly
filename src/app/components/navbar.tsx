@@ -5,7 +5,7 @@ import Link from "next/link";
 import {ShoppingCart, Menu, X, User} from 'lucide-react'
 import { useCartStore } from "src/store/cart-store";
 import { Button } from "./ui/button";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 export const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);

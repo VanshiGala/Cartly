@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import axios from "axios";
+import { signIn } from "next-auth/react";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({ email: "", password: "", name: "" });
@@ -9,22 +10,36 @@ export default function SignUp() {
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    setLoading(true);
-    setErrorMsg("");
-    setSuccessMsg("");
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  setLoading(true);
+  setErrorMsg("");
+  setSuccessMsg("");
+  console.log("hjfbsjd")
+  try {
+    const res = await axios.post("/api/register", formData);
+    //if (!res.data.success) throw new Error("Registration failed");
 
-    try {
-      const res = await axios.post("/api/register", formData);
-      setSuccessMsg(res.data.message);
-       window.location.href = "/";
-    } catch (error: any) {
-      setErrorMsg(error?.response?.data?.message || "Something went wrong");
+    console.log("res : ", res)
+    const SignInRes = await signIn("credentials", {
+      email: formData.email,
+      password: formData.password,
+      redirect: false,
+    });
+
+    console.log("signup res : ", SignInRes)
+    if (!SignInRes?.ok) {
+      setErrorMsg("Account created, but login failed. Please sign in.");
+      return;
     }
-
+    window.location.href = "/";
+  } catch (error: any) {
+    setErrorMsg(error?.response?.data?.message || "Signup failed");
+  } finally {
     setLoading(false);
-  };
+  }
+};
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
@@ -101,7 +116,7 @@ export default function SignUp() {
         <p className="mt-4 text-center text-sm text-gray-600">
           Already have an account?{" "}
           <a
-            href="/sign-in"
+            href="/"
             className="text-black font-medium underline hover:opacity-80"
           >
             Sign In

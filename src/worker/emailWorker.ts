@@ -11,7 +11,7 @@ interface EmailWorker {
   html?: string;
 }
 
-const transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({ //transporter -> connection to EmailService
   host: "smtp.gmail.com",
   port: 587,
   secure: false, 
