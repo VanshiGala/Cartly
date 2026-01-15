@@ -37,7 +37,7 @@ export const authOptions: NextAuthOptions = {
         });
           //Return user object to auth (NextAuth will attach session)
           return {
-            id: user.id,
+            id: user.id.toString(),
             email: user.email,
             name: user.name,
           };

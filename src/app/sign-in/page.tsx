@@ -19,7 +19,7 @@ export default function SignInPage() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
-    setErrorMessage("SignIn Error");
+    setErrorMessage("");
 
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email") as string;
