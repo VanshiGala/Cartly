@@ -37,7 +37,7 @@ export const useCartStore = create<CartStore>()(
               ),
             }; //increase qty by 1 if exists
           }
-          return { items: [...state.items, { ...item, quantity: 1 }] };
+          return { items: [...state.items, { ...item, quantity: 0 }] };
         }),
 
       removeItem: (id) =>
